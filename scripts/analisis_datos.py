@@ -28,16 +28,32 @@ print(f"Monto Total de Ventas: ${ventas_totales}")
 print(f"Venta Promedio por Operación: ${promedio_por_transaccion:.2f}")
 print(f"Monto de la Mayor Venta Registrada: ${venta_maxima}")
 
-# 4. Crear el gráfico solicitado (Evolución de ventas en el tiempo)
-plt.figure(figsize=(8, 4))
-plt.plot(fechas, montos, marker='o', color='mediumpurple', linestyle='-', linewidth=2)
-plt.title("Evolución Temporal de Montos de Ventas")
-plt.xlabel("Fecha de Venta")
-plt.ylabel("Monto ($)")
-plt.grid(True, linestyle='--', alpha=0.6)
-plt.xticks(rotation=45)
+# 4. Limpieza absoluta de memoria gráfica previa
+plt.clf()
+plt.close('all')
+
+# 5. Crear el gráfico solicitado (Evolución de ventas en el tiempo)
+fig, ax = plt.subplots(figsize=(12, 6)) # Un poco más grande para dar aire
+ax.plot(fechas, montos, marker='o', color='mediumpurple', linestyle='-', linewidth=1, markersize=4)
+
+# --- CONFIGURACIÓN CRÍTICA DE LECTURA PARA EL EJE X ---
+# Seleccionamos un índice cada 30 registros para que el texto respire
+paso = 30
+indices_visibles = list(range(0, len(fechas), paso))
+fechas_visibles = [fechas[i] for i in indices_visibles]
+
+ax.set_xticks(indices_visibles)
+ax.set_xticklabels(fechas_visibles, rotation=45, ha='right', fontsize=9)
+# ------------------------------------------------------
+
+ax.set_title("Evolución Temporal de Montos de Ventas", fontsize=12, fontweight='bold')
+ax.set_xlabel("Fecha de Venta", fontsize=10)
+ax.set_ylabel("Monto ($)", fontsize=10)
+ax.grid(True, linestyle='--', alpha=0.6)
+
 plt.tight_layout()
 
-# 5. Guardar la imagen en la carpeta /resultados
-plt.savefig(ruta_grafico)
-print(f"\n[ÉXITO] Gráfico temporal generado y guardado en: {ruta_grafico}")
+# 6. Guardar la imagen en la carpeta /resultados
+os.makedirs("resultados", exist_ok=True)
+plt.savefig(ruta_grafico, dpi=300)
+print(f"\n[ÉXITO DE QA] Gráfico temporal generado de forma limpia en: {ruta_grafico}")
