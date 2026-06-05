@@ -8,3 +8,7 @@
 * **P1 - Líder y Organizador:** Hugo
 * **P2 - Desarrollador Técnico:** Paco
 * **P3 - Revisor y QA:** Luis
+
+
+## Control de Calidad
+- Versión auditada y aprobada por el rol de Luis (QA).
